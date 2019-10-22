@@ -6,5 +6,12 @@ module.exports = {
     output:{
         path:path.resolve(__dirname,'dist'),
         filename:'bundle.js'
+    },
+    devServer:{
+        contentBase:'./dist',
+        compress:true,
+        port:9999,
+        hot:true,
+        open:true
     }
 }
