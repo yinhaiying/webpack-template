@@ -5,7 +5,10 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
     mode:"development",
-    entry:'./src/index.js',
+    entry:{
+        index:'./src/index.js',
+        base:'./src/base.js'
+    },
     output:{
         path:path.resolve(__dirname,'dist'),
         filename:'[name].[hash:8].js'
@@ -29,7 +32,13 @@ module.exports = {
         //自动生成html模板
         new HtmlWebpackPlugin({
             template:'./src/index.html',  // 指定的html模板
-            filename:'index.html'
+            filename:'index.html',
+            chunks:['index']
+        }),
+        new HtmlWebpackPlugin({
+            template:'./src/base.html',  // 指定的html模板
+            filename:'base.html',
+            chunks:['base'],//在产出的html文件中引入哪些代码块,通过entry名字进行设置
         }),
 
         // 每次打包前清除dist目录下文件
