@@ -4,6 +4,22 @@ const HtmlWebpackPlugin  = require('html-webpack-plugin');
 
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
+//循环
+
+let pages = ['index','base'];
+// 多入口生成多个模板
+function produceManyPages(pages){
+    return pages.map((item,index) => {
+        return  new HtmlWebpackPlugin({
+            template:'./src/index.html',  // 指定的html模板
+            filename:`${item}.html`,
+            chunks:['vendor',item]
+        });
+    })
+}
+
+
+
 module.exports = {
     mode:"development",
     entry:{
@@ -35,17 +51,7 @@ module.exports = {
         new webpack.ProvidePlugin({
           $:'jquery'
         }),
-        //自动生成html模板
-        new HtmlWebpackPlugin({
-            template:'./src/index.html',  // 指定的html模板
-            filename:'index.html',
-            chunks:['vendor','index']
-        }),
-        new HtmlWebpackPlugin({
-            template:'./src/base.html',  // 指定的html模板
-            filename:'base.html',
-            chunks:['vendor','base'],//在产出的html文件中引入哪些代码块,通过entry名字进行设置
-        }),
+        ...produceManyPages(pages),
         // 每次打包前清除dist目录下文件
         new CleanWebpackPlugin()
     ]
