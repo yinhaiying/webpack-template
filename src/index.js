@@ -1,3 +1,3 @@
 
 require('./index.css')
-document.getElementById('app').innerHTML = "app";
+$('#app').html('app')
