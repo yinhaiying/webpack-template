@@ -4,32 +4,12 @@ const HtmlWebpackPlugin  = require('html-webpack-plugin');
 
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
-//循环
-
-let pages = ['index','base'];
-// 多入口生成多个模板
-function produceManyPages(pages){
-    return pages.map((item,index) => {
-        return  new HtmlWebpackPlugin({
-            template:'./src/index.html',  // 指定的html模板
-            filename:`${item}.html`,
-            chunks:['vendor',item]
-        });
-    })
-}
-
-
-
 module.exports = {
     mode:"development",
-    entry:{
-        index:'./src/index.js',
-        base:'./src/base.js',
-        vendor:'jquery'
-    },
+    entry: './src/index.js',
     output:{
         path:path.resolve(__dirname,'dist'),
-        filename:'[name].[hash:8].js'
+        filename:'[name][hash:8].js'
     },
     devServer:{
         contentBase:'./dist/',
@@ -43,15 +23,20 @@ module.exports = {
             {
                 test:/\.css$/,
                 use:['style-loader','css-loader']
+            },
+            {
+                //解析图片地址，把图片从原来的位置打包到目标位置
+                //file-loader可以处理任意的二进制数据
+                test:/\.(png|jpg|gif|svg|bmp)$/,
+                use:['file-loader']
             }
         ]
     },
     plugins:[
-        // 自动向模块内部注入变量
-        new webpack.ProvidePlugin({
-          $:'jquery'
+        new HtmlWebpackPlugin({
+            template:'./src/index.html',  // 指定的html模板
+            filename:`index.html`,
         }),
-        ...produceManyPages(pages),
         // 每次打包前清除dist目录下文件
         new CleanWebpackPlugin()
     ]

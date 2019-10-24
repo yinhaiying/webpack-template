@@ -1,3 +1,4 @@
 
 require('./index.css')
-$('#app').html('app')
+
+document.getElementById('#app').innerHTML = 'app'
