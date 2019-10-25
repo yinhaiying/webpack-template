@@ -28,7 +28,10 @@ module.exports = {
                 //解析图片地址，把图片从原来的位置打包到目标位置
                 //file-loader可以处理任意的二进制数据
                 test:/\.(png|jpg|gif|svg|bmp)$/,
-                use:['file-loader']
+                loader:'file-loader',
+                options: {
+                    name: '[path][name].[ext]',
+                },
             }
         ]
     },
