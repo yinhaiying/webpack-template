@@ -8,6 +8,12 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 module.exports = {
     mode:"development",
     entry: './src/index.js',
+    watch:true,
+    watchOptions:{
+        exclude:/node_modules/,
+        poll:1000, // 每秒钟询问的次数
+        aggregateTimeout:500  //类似于防抖和节流。500ms内有多次修改，不会进行编译
+    },
     output:{
         path:path.resolve(__dirname,'dist'),
         // publicPath:'http://localhost:8888',
