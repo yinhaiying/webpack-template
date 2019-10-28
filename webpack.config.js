@@ -32,7 +32,8 @@ module.exports = {
                             publicPath: "../"
                         } 
                     },
-                    'css-loader'
+                    'css-loader',
+                    'postcss-loader'
                 ]
             },
             {
@@ -80,6 +81,11 @@ module.exports = {
         // 抽离css文件
         new MiniCssExtractPlugin({
             filename:'[name].css',  // 抽离后的文件名
+            chunkFilename:'[name].css',
+            ignoreOrder:false
+        }),
+        new MiniCssExtractPlugin({
+            filename:'[name].less',  // 抽离后的文件名
             chunkFilename:'[name].css',
             ignoreOrder:false
         })
