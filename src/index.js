@@ -1,10 +1,14 @@
 
 require('./index.css')
 
-document.getElementById('#app').innerHTML = 'app'
+
+
+require('./index.less');
+
+require('./index.scss');
 
 import src from '../assets/images/1.jpg';
 
 let image = new Image();
 image.src = src;
-document.appendChild(image);
+document.body.appendChild(image);

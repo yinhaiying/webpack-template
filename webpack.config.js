@@ -25,6 +25,16 @@ module.exports = {
                 use:['style-loader','css-loader']
             },
             {
+                test:/\.less$/,
+                loader:['style-loader','css-loader','less-loader']
+
+            },
+            {
+                test:/\.s[ac]ss$/i,
+                loader:['style-loader','css-loader','sass-loader']
+
+            },
+            {
                 //解析图片地址，把图片从原来的位置打包到目标位置
                 //file-loader可以处理任意的二进制数据
                 test:/\.(png|jpg|gif|svg|bmp)$/,
