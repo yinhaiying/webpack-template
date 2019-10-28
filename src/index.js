@@ -1,5 +1,6 @@
 
 require('./index.css')
+require('./base.css')
 
 
 

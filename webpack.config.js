@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin  = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
@@ -9,6 +10,7 @@ module.exports = {
     entry: './src/index.js',
     output:{
         path:path.resolve(__dirname,'dist'),
+        // publicPath:'http://localhost:8888',
         filename:'[name][hash:8].js'
     },
     devServer:{
@@ -22,17 +24,40 @@ module.exports = {
         rules:[
             {
                 test:/\.css$/,
-                use:['style-loader','css-loader']
+                // use:['style-loader','css-loader']
+                use:[
+                    {
+                        loader:MiniCssExtractPlugin.loader,
+                        options:{
+                            publicPath: "../"
+                        } 
+                    },
+                    'css-loader'
+                ]
             },
             {
                 test:/\.less$/,
-                loader:['style-loader','css-loader','less-loader']
+                loader:[
+                    // 'style-loader',
+                    {
+                        loader:MiniCssExtractPlugin.loader
+                    },
+                    'css-loader',
+                    'less-loader'
+                ]
 
             },
             {
                 test:/\.s[ac]ss$/i,
-                loader:['style-loader','css-loader','sass-loader']
+                use:[
+                    // 'style-loader',
+                    {
+                        loader:MiniCssExtractPlugin.loader
 
+                    },
+                    'css-loader',
+                    'sass-loader'
+                ]
             },
             {
                 //解析图片地址，把图片从原来的位置打包到目标位置
@@ -51,7 +76,13 @@ module.exports = {
             filename:`index.html`,
         }),
         // 每次打包前清除dist目录下文件
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        // 抽离css文件
+        new MiniCssExtractPlugin({
+            filename:'[name].css',  // 抽离后的文件名
+            chunkFilename:'[name].css',
+            ignoreOrder:false
+        })
     ]
     
 }
