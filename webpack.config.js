@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin  = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const CopyPlugin = require('copy-webpack-plugin');
+
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
@@ -10,7 +12,7 @@ module.exports = {
     entry: './src/index.js',
     watch:true,
     watchOptions:{
-        exclude:/node_modules/,
+        ignored:'/node_modules/',
         poll:1000, // 每秒钟询问的次数
         aggregateTimeout:500  //类似于防抖和节流。500ms内有多次修改，不会进行编译
     },
@@ -103,7 +105,13 @@ module.exports = {
             filename:'[name].less',  // 抽离后的文件名
             chunkFilename:'[name].css',
             ignoreOrder:false
-        })
+        }),
+        new CopyPlugin([
+            {
+                from:path.join(__dirname,'src/common'),
+                to:path.join(__dirname,'dist','common')
+            }
+        ])
     ]
     
 }
