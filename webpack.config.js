@@ -21,6 +21,13 @@ module.exports = {
         // publicPath:'http://localhost:8888',
         filename:'[name][hash:8].js'
     },
+    resolve:{
+        alias:{
+            "@":Path.resolve(__dirname,'src')
+        },
+        //引入模块的时候，省略扩展名。会自动按照当前顺序进行查找。
+        extensions:["","js","vue",",json"]
+    },
     devServer:{
         contentBase:'./dist/',
         compress:true,
