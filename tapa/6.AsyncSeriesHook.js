@@ -8,7 +8,6 @@ class AsyncSeriesHook{
     constructor(){
         this.hooks = [];
     }
-    
     tapAsync(name,fn){
        this.hooks.push(fn);
     }
