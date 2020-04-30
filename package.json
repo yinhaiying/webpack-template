@@ -4,7 +4,7 @@
   "description": "从零开始搭建webpack",
   "main": "webpack.config.js",
   "dependencies": {
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
   },
